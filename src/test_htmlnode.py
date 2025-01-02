@@ -150,7 +150,7 @@ class TestParentNode(unittest.TestCase):
         node = ParentNode(
             "b",
             [
-                LeafNode(tag="b", value=""),
+                LeafNode(tag="b", value=None),
                 LeafNode(tag=None, value="Normal text"),
                 ParentNode (
                     "code",
