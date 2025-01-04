@@ -90,7 +90,7 @@ class TestParentNode(unittest.TestCase):
             {"href": "https://www.google.com","target": "_blank",}
         )
         to_html = node.to_html()
-        self.assertEqual(to_html, "<p><b>Bold text</b>Normal text<i>italic text</i>Normal text</p>")
+        self.assertEqual(to_html, "<p> href=\"https://www.google.com\" target=\"_blank\"<b>Bold text</b>Normal text<i>italic text</i>Normal text</p>")
 
     def test_recursive_to_html_no_children(self):
         node = ParentNode(
