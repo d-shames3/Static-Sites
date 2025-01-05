@@ -1,5 +1,5 @@
 import unittest
-from splitdelimiter import split_nodes_delimiter
+from inline_text import split_nodes_delimiter, extract_markdown_images, extract_markdown_links
 from textnode import TextNode, TextType
 
 class TestSplitDelimiter(unittest.TestCase):
@@ -102,3 +102,28 @@ class TestSplitDelimiter(unittest.TestCase):
             new_nodes,
         )
 
+class TestMarkdownLinkImageExtraction(unittest.TestCase):
+    string = """
+                blahblah blah blah asd;fkljasldj@#DS![rick roll](https://i.imgur.com/aKa0qIh.gif)aj;sdfadkslblah blah blah![obi wan](https://ilimgur.com/fJrM4Vk.jepg)asd;jfa302309blah blah blah
+                [to boot dev](https://www.boot.dev) a;jsdfakhb;a;blahblah
+                a;asd;fajk;i23[to youtube](https://www.youtube.com/@bootdotdev)!@#(*Sblahblah
+            """
+    def test_extract_markdown_images(self):
+        images = extract_markdown_images(self.string)
+        self.assertListEqual(
+            images,
+            [
+                ("rick roll", "https://i.imgur.com/aKa0qIh.gif"), 
+                ("obi wan", "https://ilimgur.com/fJrM4Vk.jepg")
+            ]
+        )
+
+    def test_extract_markdown_links(self):
+        links = extract_markdown_links(self.string)
+        self.assertListEqual(
+            links,
+            [
+                ("to boot dev", "https://www.boot.dev"),
+                ("to youtube", "https://www.youtube.com/@bootdotdev")
+            ]
+        )
