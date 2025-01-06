@@ -4,7 +4,7 @@ from textnode import TextType, TextNode
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = []
     for node in old_nodes:
-        if node.text_type != TextType.NORMAL:
+        if node.text_type != TextType.TEXT:
             new_nodes.extend([node])
             continue
         text = node.text
@@ -23,15 +23,15 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
             split_text = text[:second_delim].split(delimiter)
 
             if split_text[0] != "":
-                normal_text = TextNode(split_text[0], TextType.NORMAL)
-                new_nodes.extend([normal_text])
+                TEXT_text = TextNode(split_text[0], TextType.TEXT)
+                new_nodes.extend([TEXT_text])
 
             delimited_text = TextNode(split_text[1], text_type)
             new_nodes.extend([delimited_text])
 
             if len(text[second_delim + len(delimiter):]) > 0:
                 remainder_text = text[second_delim + len(delimiter):]
-                remainder_node = TextNode(remainder_text, TextType.NORMAL)
+                remainder_node = TextNode(remainder_text, TextType.TEXT)
                 remainder_nodes =  split_nodes_delimiter([remainder_node], delimiter, text_type)
                 new_nodes.extend(remainder_nodes)
                 continue
@@ -67,14 +67,14 @@ def split_nodes_image(old_nodes):
         sections = text.split(f"![{image_alt}]({image_link})", 1)
         
         if sections[0] != "":
-            normal_text = TextNode(sections[0], TextType.NORMAL)
-            new_nodes.extend([normal_text])
+            TEXT_text = TextNode(sections[0], TextType.TEXT)
+            new_nodes.extend([TEXT_text])
         
         image_node = TextNode(match[0], TextType.IMAGE, match[1])
         new_nodes.extend([image_node])
 
         if len(sections) > 1:
-            remainder_node = TextNode(sections[1], TextType.NORMAL)
+            remainder_node = TextNode(sections[1], TextType.TEXT)
             remainder_nodes = split_nodes_image([remainder_node])
             new_nodes.extend(remainder_nodes)
             
@@ -99,15 +99,27 @@ def split_nodes_link(old_nodes):
         sections = text.split(f"[{image_alt}]({image_link})", 1)
         
         if sections[0] != "":
-            normal_text = TextNode(sections[0], TextType.NORMAL)
-            new_nodes.extend([normal_text])
+            TEXT_text = TextNode(sections[0], TextType.TEXT)
+            new_nodes.extend([TEXT_text])
         
         image_node = TextNode(match[0], TextType.LINK, match[1])
         new_nodes.extend([image_node])
 
         if len(sections) > 1:
-            remainder_node = TextNode(sections[1], TextType.NORMAL)
+            remainder_node = TextNode(sections[1], TextType.TEXT)
             remainder_nodes = split_nodes_link([remainder_node])
             new_nodes.extend(remainder_nodes)
 
     return new_nodes
+
+def text_to_textnodes(text):
+    node_list = [TextNode(text, TextType.TEXT)]
+    if node_list[0].text == "":
+        return node_list
+    new_nodes = split_nodes_image(node_list)
+    new_nodes = split_nodes_link(new_nodes)
+    new_nodes = split_nodes_delimiter(new_nodes, "**", TextType.BOLD)
+    new_nodes = split_nodes_delimiter(new_nodes, "*", TextType.ITALIC)
+    new_nodes = split_nodes_delimiter(new_nodes, "`", TextType.CODE)
+
+    return new_nodes    
