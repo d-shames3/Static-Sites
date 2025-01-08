@@ -1,3 +1,15 @@
+from htmlnode import (
+    ParentNode, 
+    LeafNode
+)
+from textnode import (
+    TextType,
+    TextNode,
+    text_node_to_html_node
+)
+from inline_text import text_to_textnodes
+import re
+
 def split_block(text):
     split_newline = text.split("\n\n")
     whitespace_stripped = list(map(lambda string: string.strip(), split_newline))
@@ -20,3 +32,73 @@ def block_to_block_type(markdown_block):
     else:
         return "paragraph"
     
+def get_html_tag(block_type):
+    block_type_to_html_tag = {
+        "paragraph": "p",
+        "quote": "blockquote",
+        "unordered_list": "ul",
+        "ordered_list": "ol",
+        "code": "code",
+        "heading": "h"
+    }
+    return block_type_to_html_tag[block_type]
+
+def text_to_children(markdown_block):
+    text_nodes = text_to_textnodes(markdown_block)
+    html_nodes = list(map(text_node_to_html_node, text_nodes))
+    return html_nodes
+
+def markdown_to_html_node(markdown_string):
+    parent = ParentNode("div", children=[])
+
+    block_list = split_block(markdown_string)
+    for block in block_list:
+        type = block_to_block_type(block)
+        tag = get_html_tag(type)
+        
+        if type == "heading":
+            heading_number = len(block.split(" ", 1)[0])
+            tag += str(heading_number)
+            heading_node = ParentNode(tag, children=[])
+            delimiter = r"\#{1,6} "
+            clean_block = re.sub(delimiter, "", block)
+            children = text_to_children(clean_block)
+            heading_node.children.extend(children)
+            parent.children.append(heading_node)
+        
+        elif type == "code":
+            pre_node = ParentNode("pre", children=[])
+            code_node = ParentNode(tag, children=[])
+            children = text_to_children(block)  
+            code_node.children.extend(children)
+            pre_node.children.append(code_node)
+            parent.children.append(pre_node)  
+        
+        elif type in ["ordered_list", "unordered_list"]:
+            list_node = ParentNode(tag, children=[])
+            delimiter = r"\*|- " if type == "unordered_list" else r"\d. "    
+            
+            split_list = re.split(delimiter, block)
+            for item in split_list:
+                if item.strip():
+                    li_node = ParentNode("li", children=[])
+                    children = text_to_children(item)
+                    li_node.children.extend(children)
+                    list_node.children.extend(li_node)
+            
+            parent.children.append(list_node)
+        
+        elif type == "blockquote":
+            blockquote_node = ParentNode(tag, children=[])
+            clean_block = block.strip("> ")
+            children = text_to_children(clean_block)
+            blockquote_node.children.extend(children)
+            parent.children.append(blockquote_node)
+        
+        else:
+            nested_parent = ParentNode(tag, children=[])
+            children = text_to_children(block)
+            nested_parent.children.extend(children)
+            parent.children.append(nested_parent)
+
+    return parent
