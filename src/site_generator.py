@@ -6,7 +6,10 @@ from block_text import markdown_to_html_node
 def copy_static(source, destination):
     if not os.path.exists(source):
         raise Exception("Invalid source directory path")
-    
+
+    if not os.path.exists(destination):
+        os.makedirs(destination)
+
     destination_object_list = os.listdir(destination)
     if destination_object_list:
         shutil.rmtree(destination)
