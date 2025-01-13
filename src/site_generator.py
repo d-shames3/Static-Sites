@@ -62,7 +62,7 @@ def generate_pages_recursive(from_directory, template_path, dest_directory):
         raise Exception("Invalid source directory path")
     
     if not os.path.exists(dest_directory):
-        os.mkdirs(dest_directory)
+        os.makedirs(dest_directory)
     
     source_object_list = os.listdir(from_directory)
 
