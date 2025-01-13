@@ -1,4 +1,4 @@
-import os, shutil
+import os, shutil, pathlib
 from block_text import markdown_to_html_node
 
 def copy_static(source, destination):
@@ -51,3 +51,21 @@ def generate_page(from_path, template_path, dest_path):
     
     with open(dest_path, "w") as file:
         file.write(html_page)    
+
+def generate_pages_recursive(from_directory, template_path, dest_directory):
+    if not os.path.exists(from_directory):
+        raise Exception("Invalid source directory path")
+    
+    source_object_list = os.listdir(from_directory)
+
+    for object in source_object_list:
+        object_path = pathlib.Path(object)
+        from_path = os.path.join(from_directory, object)
+        dest_path = os.path.join(dest_directory, object)
+        if os.path.isfile(from_path):
+            if object_path.suffix == ".md":
+                dest_object = object_path.with_suffix(".html")
+                dest_path = os.path.join(dest_directory, dest_object)
+                generate_page(from_path, template_path, dest_path)
+        else:
+            generate_pages_recursive(from_path, template_path, dest_path)
