@@ -69,7 +69,7 @@ class TestMarkdownToHTMLNode(unittest.TestCase):
     ul = "* elem 1\n* elem2\n* elem 3"
     ol = "1. elem 1\n2. elem2\n3. elem 3"
     code = "```sick code bruh```"
-    blockquote = "> this is\n> part of a quote\n> that has an *italic* element"
+    blockquote = "> This is\n> part of a quote\n> that has an *italic* element"
 
     def test_paragraph(self):
         p = markdown_to_html_node(self.paragraph)
@@ -112,4 +112,14 @@ class TestMarkdownToHTMLNode(unittest.TestCase):
             ])
         ])
         self.assertEqual(comp, h5)
-# todo add more tests
+    
+    def test_blockquote(self):
+        blockquote = markdown_to_html_node(self.blockquote)
+        comp = ParentNode("div", children=[
+            ParentNode("blockquote", children=[
+                LeafNode(tag=None, value="This is part of a quote that has an "),
+                LeafNode(tag="i", value="italic"),
+                LeafNode(tag=None, value=" element")
+            ])
+        ])
+        self.assertEqual(comp, blockquote)

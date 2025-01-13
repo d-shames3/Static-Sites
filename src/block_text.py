@@ -67,30 +67,31 @@ def markdown_to_html_node(markdown_string):
             parent.children.append(heading_node)
         
         elif type == "code":
+            code_content = "\n".join(block.strip().split("\n")[1:-1])
             pre_node = ParentNode("pre", children=[])
             code_node = ParentNode(tag, children=[])
-            children = text_to_children(block)  
+            children = text_to_children(code_content)  
             code_node.children.extend(children)
             pre_node.children.append(code_node)
             parent.children.append(pre_node)  
         
         elif type in ["ordered_list", "unordered_list"]:
             list_node = ParentNode(tag, children=[])
-            delimiter = r"\*|- " if type == "unordered_list" else r"\d. "    
-            
+            delimiter = r"\* |- " if type == "unordered_list" else r"\d. "    
             split_list = re.split(delimiter, block)
             for item in split_list:
                 if item.strip():
                     li_node = ParentNode("li", children=[])
-                    children = text_to_children(item)
+                    children = text_to_children(item.strip())
                     li_node.children.extend(children)
-                    list_node.children.extend(li_node)
-            
+                    list_node.children.append(li_node)
             parent.children.append(list_node)
         
-        elif type == "blockquote":
+        elif type == "quote":
             blockquote_node = ParentNode(tag, children=[])
-            clean_block = block.strip("> ")
+            lines = block.split("\n")
+            clean_lines = [line.lstrip("> ").strip() for line in lines]
+            clean_block = " ".join(clean_lines)
             children = text_to_children(clean_block)
             blockquote_node.children.extend(children)
             parent.children.append(blockquote_node)

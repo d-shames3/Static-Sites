@@ -32,7 +32,7 @@ class LeafNode(HTMLNode):
         elif self.tag == None:
             return self.value
         else:
-            return f"<{self.tag}>{self.props_to_html()}{self.value}</{self.tag}>"
+            return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
 
 class ParentNode(HTMLNode):
     def __init__(self, tag, children, props=None):
@@ -44,7 +44,7 @@ class ParentNode(HTMLNode):
         elif self.children is None:
             raise ValueError("All parent nodes must have children nodes")
         else:
-            start_html_string = f"<{self.tag}>{self.props_to_html()}"
+            start_html_string = f"<{self.tag}{self.props_to_html()}>"
             end_html_string = f"</{self.tag}>"
             for child in self.children:
                 if isinstance(child, HTMLNode):
