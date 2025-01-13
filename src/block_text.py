@@ -1,10 +1,7 @@
 from htmlnode import (
-    ParentNode, 
-    LeafNode
+    ParentNode
 )
 from textnode import (
-    TextType,
-    TextNode,
     text_node_to_html_node
 )
 from inline_text import text_to_textnodes

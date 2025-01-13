@@ -1,4 +1,3 @@
-from textnode import TextType, TextNode
 from site_generator import copy_static, generate_pages_recursive
 
 def main():

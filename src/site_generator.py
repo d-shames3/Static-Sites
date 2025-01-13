@@ -1,4 +1,6 @@
-import os, shutil, pathlib
+import os
+import shutil
+import pathlib
 from block_text import markdown_to_html_node
 
 def copy_static(source, destination):

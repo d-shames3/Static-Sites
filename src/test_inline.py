@@ -173,7 +173,7 @@ class TestMarkdownLinkImageExtraction(unittest.TestCase):
             split_links,
         )
 
-    def test_multiple_split_nodes_image(self):
+    def test_multiple_split_nodes_link(self):
         node = TextNode("This is text with an [link](https://www.link.com) that we are testing and [here](https://www.another.com) is another and a ![image](https://www.image.com)", TextType.TEXT)
         split_links = split_nodes_link([node])
         self.assertListEqual(
