@@ -1,11 +1,11 @@
 body {
-    background-color: #0d1117;
-    color: #c9d1d9;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-    line-height: 1.5;
+    background-color: #181a1f; /* Darker background for a sleek, minimalistic feel */
+    color: #e3e4e8; /* Light grayish text for a soft, readable look */
+    font-family: "Poppins", sans-serif; /* Playful, modern font */
+    line-height: 1.6;
     margin: 0;
     padding: 20px;
-    max-width: 800px;
+    max-width: 850px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -14,55 +14,54 @@ b {
     font-weight: 900;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
     color: #58a6ff;
     margin-top: 24px;
     margin-bottom: 16px;
+    font-family: "Raleway", sans-serif; /* Stylish serif-like sans font for headings */
+    text-transform: uppercase; /* Adds a modern touch to headings */
 }
 
 h1 {
-    font-size: 2em;
+    font-size: 2.5em;
+    border-bottom: 2px solid #58a6ff; /* Thin line under main header for flair */
+    padding-bottom: 4px;
 }
 
 h2 {
-    font-size: 1.5em;
+    font-size: 2em;
 }
 
 h3 {
-    font-size: 1.17em;
+    font-size: 1.5em;
 }
 
-h4,
-h5,
-h6 {
-    font-size: 1em;
+h4, h5, h6 {
+    font-size: 1.2em;
+    color: #b3b8c3; /* Lighter gray for subheadings to differentiate */
 }
 
 a {
-    color: #58a6ff;
+    color: #e3e4e8; /* Soft teal for links */
     text-decoration: none;
 }
 
 a:hover {
+    color: #e3e4e8; /* Slightly brighter teal for hover effect */
     text-decoration: underline;
 }
 
-ul,
-ol {
+ul, ol {
     padding-left: 20px;
+
 }
 
 code {
-    background-color: #242424;
+    background-color: #24292f; /* Darker background for code blocks */
     border-radius: 6px;
     color: #d2a8ff;
     padding: 0.2em 0.4em;
-    font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+    font-family: "Courier New", monospace;
 }
 
 pre code {
@@ -70,24 +69,52 @@ pre code {
 }
 
 pre {
-    background-color: #242424;
+    background-color: #24292f;
     border-radius: 6px;
     padding: 0.2em 0.4em;
 }
 
 blockquote {
-    background-color: #242424;
-    border-left: 4px solid #30363d;
+    background-color: #2a2d33; /* Slightly lighter background for blockquotes */
+    border-left: 4px solid #3c4043; /* Darker accent line */
     padding-left: 2em;
     margin-left: 0;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
     padding-right: 0.5em;
-    color: #8b949e;
+    color: #a1a6b0; /* Softer grayish tone for blockquote text */
 }
 
 img {
     max-width: 100%;
     height: auto;
     border-radius: 6px;
+}
+
+section {
+    border-bottom: 2px solid #444a52; /* Subtle line separating sections for a clean look */
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+section h2 {
+    font-size: 1.75em;
+    color: #f4b700; /* Earthy yellow/orange for section titles to create contrast */
+    padding-bottom: 5px;
+    border-bottom: 1px solid #444a52;
+}
+
+hr {
+    border: 0;
+    border-top: 1px dashed #444a52; /* Simple dashed line between sections */
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+    fill: #7fdbdb; /* Icon color matching the heading */
 }
