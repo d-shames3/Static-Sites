@@ -7,7 +7,7 @@ on:
 jobs:
     deploy:
         name: Deploy
-        runs-on: macos-latest
+        runs-on: ubuntu-latest
         environment: production
         env:
           aws_static_site_bucket: ${{ secrets.AWS_STATIC_SITE_BUCKET }}
@@ -29,7 +29,6 @@ jobs:
 
             - name: Install python
               run: uv install python
-
-
-
-
+            
+            - name: Deploy to S3
+              run: bash s3_deploy.sh
