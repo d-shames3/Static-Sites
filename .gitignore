@@ -11,3 +11,10 @@ wheels/
 
 # Generated content
 public/
+
+# Env vars
+.envrc
+.env
+
+# Misc metadata
+.DS_Store
