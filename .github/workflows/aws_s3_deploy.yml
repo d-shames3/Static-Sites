@@ -1,0 +1,34 @@
+name: Deploy to AWS S3
+
+on:
+    push:
+        branches: [ main ]
+
+jobs:
+    deploy:
+        name: Deploy
+        runs-on: ubuntu-latest
+        environment: production
+        env:
+          aws_static_site_bucket: ${{ secrets.AWS_STATIC_SITE_BUCKET }}
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Configure AWS credentials
+              uses: aws-actions/configure-aws-credentials@v1
+              with:
+                aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+            - name: Install uv
+              uses: astral-sh/setup-uv@v5
+              with:
+                version: "0.6.9"
+
+            - name: Install python
+              run: uv install python
+            
+            - name: Deploy to S3
+              run: bash s3_deploy.sh
