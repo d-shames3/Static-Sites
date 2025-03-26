@@ -1,6 +1,6 @@
 # Static Sites
 
-Static site generator written in Python. Takes MarkDown files and renders them as HTML using local server.
+Static site generator written in Python. Takes MarkDown files and renders them as HTML using local server. If configured, can push files to s3 bucket hosting static site via AWS CloudFront.
 
 ## Steps to Run Locally
 
