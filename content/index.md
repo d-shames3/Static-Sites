@@ -66,4 +66,4 @@ SQL | Python | Jinja | Golang | R | LookML
 
 #### Boston University, Ph.D.
 
-#### University of Vermont, B.A. TEST
+#### University of Vermont, B.A. 
