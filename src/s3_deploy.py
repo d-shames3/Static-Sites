@@ -8,7 +8,7 @@ def main():
     destination = os.path.join(path_to_repo, "public")
 
     # load env vars
-    bucket=os.environ.get("bucket")
+    bucket=os.environ.get("AWS_STATIC_SITE_BUCKET")
 
     s3 = boto3.client('s3')
     empty_s3_bucket(s3, bucket)
