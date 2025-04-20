@@ -1,6 +1,6 @@
 # David Shames 
 
-[dshames3@gmail.com](dshames3@gmail.com) | (617) 947-7238 | [linkedin](https://www.linkedin.com/in/david-a-shames) | [github](https://github.com/d-shames3)
+[dshames3@gmail.com](mailto:dshames3@gmail.com) | [linkedin](https://www.linkedin.com/in/david-a-shames) | [github](https://github.com/d-shames3)
 
 ## Professional Experience
 
